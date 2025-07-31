@@ -12,24 +12,6 @@ services:
     networks:
       - app-network
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.dev
-    ports:
-      - "3131:3131"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://backend:8000
-    restart: unless-stopped
-    depends_on:
-      - backend
-    networks:
-      - app-network
-
   auth-service:
     build: ./auth-service
     ports:
