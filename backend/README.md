@@ -1,41 +1,33 @@
 # Backend - FastAPI Application
 
-This is a FastAPI backend application for the app security interview project.
+This is the main FastAPI backend application for the app security interview project. It provides JWT authentication validation and protected endpoints that communicate with the auth-service.
 
-## Setup and Running
-
-### Using Docker (Recommended)
-
-1. Build and run with docker-compose:
-```bash
-cd backend
-docker-compose up --build
-```
-
-2. Or build and run with Docker directly:
-```bash
-cd backend
-docker build -t app-sec-backend .
-docker run -p 8000:8000 app-sec-backend
-```
-
-### Local Development
-
-1. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-2. Run the application:
-```bash
-uvicorn app:app --host 0.0.0.0 --port 8000 --reload
-```
 
 ## API Endpoints
 
+### Public Endpoints
 - `GET /` - Root endpoint with welcome message
 - `GET /health` - Health check endpoint
-- `GET /api/test` - Test endpoint for API functionality
+- `GET /health/db` - Database connectivity check
+
+### Authentication Endpoints
+- `POST /auth/validate` - Validate JWT token
+
+### Protected Endpoints (Require JWT)
+- `GET /protected/profile` - Get user profile
+- `GET /protected/dashboard` - Protected dashboard endpoint
+
+### User Management
+- `GET /users/me` - Get current user information
+- `GET /users/{user_id}` - Get user by ID
+
+## Authentication Flow
+
+1. Register/Login via auth-service (`http://localhost:8001`)
+2. Receive JWT token from auth-service
+3. Include token in Authorization header: `Bearer <token>`
+4. Backend validates token via middleware
+5. Access protected endpoints
 
 ## Access
 
@@ -43,3 +35,4 @@ Once running, the API will be available at:
 - API: http://localhost:8000
 - Interactive API docs: http://localhost:8000/docs
 - Alternative API docs: http://localhost:8000/redoc
+
