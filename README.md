@@ -9,6 +9,9 @@
 ---
 
 ## 📋 Current Authentication Behavior
+**Current Authentication Flow:**
+
+![Authentication Flow Diagram](flow-diagram.png)
 
 **Issues with current approach:**
 - User actively clicking around at minute 29? Still logged out at minute 30
