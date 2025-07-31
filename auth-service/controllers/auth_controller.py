@@ -63,14 +63,6 @@ async def login_user(login_data: UserLogin):
         access_token=access_token,
         token_type="bearer",
         expires_in=ACCESS_TOKEN_EXPIRE_MINUTES * 60,  # Convert to seconds
-        user=UserResponse(
-            id=user.id,
-            username=user.username,
-            email=user.email,
-            is_active=user.is_active,
-            created_at=user.created_at,
-            updated_at=user.updated_at
-        )
     )
 
 @router.get("/verify", response_model=UserResponse)
