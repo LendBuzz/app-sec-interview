@@ -30,6 +30,42 @@ services:
     networks:
       - app-network
 
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./auth-service:/app
+    environment:
+      - PYTHONPATH=/app
+      - DATABASE_URL=postgresql://auth_user:auth_password@postgres:5432/auth_db
+      - SECRET_KEY=dev-secret-key-change-in-production
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+    restart: unless-stopped
+    command: uvicorn app:app --host 0.0.0.0 --port 8001 --reload
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=auth_db
+      - POSTGRES_USER=auth_user
+      - POSTGRES_PASSWORD=auth_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./auth-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  postgres_data:
