@@ -1,14 +1,11 @@
 # App Security Interview
 
-A comprehensive full-stack application demonstrating secure authentication patterns with microservices architecture.
-
 ## Architecture Overview
 
 This project consists of multiple services working together:
 
 - **Backend** (Port 8000): Main FastAPI application with JWT validation middleware and protected endpoints
 - **Auth Service** (Port 8001): Dedicated authentication service handling user registration, login, and JWT token generation
-- **PostgreSQL** (Port 5432): Database for user management and authentication data
 
 ## Quick Start with Docker Compose
 
@@ -47,14 +44,14 @@ docker-compose up --build
    ```bash
    curl -X POST "http://localhost:8001/auth/register" \
         -H "Content-Type: application/json" \
-        -d '{"username": "testuser", "email": "test@example.com", "password": "testpass123"}'
+        -d '{"username": "testuser", "email": "test@example.com", "password": "Testpass123$"}'
    ```
 
 2. **Login** to get JWT token:
    ```bash
    curl -X POST "http://localhost:8001/auth/login" \
         -H "Content-Type: application/x-www-form-urlencoded" \
-        -d "username=testuser&password=testpass123"
+        -d "username=testuser&password=Testpass123$"
    ```
 
 3. **Use the token** for protected endpoints:
